@@ -126,5 +126,149 @@ b = 0b1010      # 10
 a ^ b           # 0b0110  -> 6
 
 
+    4.3)Two’s complement in a nutshell
 
+    Let’s use 4-bit numbers to keep it small.
+
+    For positive numbers, the representation is just normal binary:
+
+    0 = 0000
+
+    1 = 0001
+
+    2 = 0010
+
+    3 = 0011
+
+    4 = 0100
+
+    5 = 0101
+
+    6 = 0110
+
+    7 = 0111
+
+    Now, how do we get -x in two’s complement?
+
+    Take the binary of x, invert all bits, then add 1.
+
+    Example: represent -5 in 4 bits.
+
+    +5 → 0101
+
+    Invert bits → 1010
+
+    Add 1 → 1010 + 1 = 1011
+
+    So, in 4-bit two’s complement:
+
+    1011 means -5
+    Check it: add 5 and -5 using 4-bit arithmetic:
+
+    0101   ( 5)
+    + 1011   (-5)
+    = 10000
+
+
+    We only keep 4 bits → 0000 (the extra 1 “overflows” and is ignored), so result is 0. Good.
+    Where does ~x = -x - 1 come from?
+
+    4.4)The bitwise NOT (~x) means: flip all bits of x.
+
+    In fixed-width two’s complement (say 4 bits):
+
+    x + ~x always equals 1111 (all 1s), because each bit pair is 0+1 or 1+0 = 1.
+
+    But 1111 in two’s complement is -1.
+
+    So:
+
+    x + ~x = -1
+    ⇒ ~x = -1 - x = -x - 1
+
+    This is always true in two’s complement.
+
+    Example in 4 bits with x = 5:
+
+    x = 5 → 0101
+
+    ~x = 1010 (bit flip) = ?
+
+    Use the identity: ~x = -x - 1 = -5 - 1 = -6.
+
+    So in 4-bit two’s complement, 1010 = -6.
+    Check: 5 + (-6) = -1:
+
+    0101  ( 5)
+    + 1010  (-6)
+    = 1111  (-1)  ✅
+
+    4.5)Why do we mask with & 0xFF (or & mask)?
+
+    When you do ~x in Python, conceptually it flips infinitely many bits, so you get a negative number.
+
+    But sometimes you want to think like a real 8-bit machine, only the lowest 8 bits matter.
+
+    Example:
+
+    x = 0b00001111      # 15
+    mask = 0b11111111   # 8-bit mask (255)
+    (~x) & mask
+
+
+    Step by step:
+
+    x = 0000 1111 (8-bit view)
+
+    ~x (Python) gives -16 (because ~15 = -16).
+
+    But if we think only 8 bits, flipping 0000 1111 should give:
+
+    1111 0000 → 240 in decimal (0b11110000)
+
+    To force this 8-bit view, we do:
+
+    (~x) & 0b11111111
+
+
+    The & mask keeps only the last 8 bits.
+    So even though ~x is ...1111 0000 in infinite bits, after & 0b11111111 we see only the bottom 8 bits:
+
+    result = 11110000 = 240.
+
+    So:
+
+    (~x) & mask   # 0b11110000 → 240
+
+
+    That’s what “invert only 8 bits” means.
+
+5) Comparison Operators
+
+Operation           Description
+x ==                y Equal to
+x != y              Not equal to
+x < y               Less than
+x > y               Greater than
+x >= y              Greater than or equal to
+x <= y              Less than or equal to
+
+A value is considered false if it is literally False, None, numerically zero, or empty.
+Otherwise, it’s considered true.
+
+Operator        Description
+x or y          If x is false, return y; otherwise, return x.
+x and y         If x is false, return x; otherwise, return y.
+not x           If x is false, return True; otherwise, return False.
+
+It is common to write an expression that updates a value. For example:
+x = x + 1
+y = y * n
+For these, you can write the following shortened operation instead:
+x += 1
+y *= n
+
+This shortened form of update can be used with any of the +, -, *, **, /, //, %, &, |, ^,
+<<, >> operators. Python does not have increment (++) or decrement (--) operators found
+in some other languages.
 
