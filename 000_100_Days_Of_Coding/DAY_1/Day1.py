@@ -21,8 +21,17 @@ print("Hello " + input("Enter your name: ") + "!")
 name = input("Enter your name: ")   
 print("Hello " + name + "!")
 #finding string length
+name_length = len(name)
+#in python, the variable declaration is dynamic -> auto detects the datatypes
+print(name_length)
+print(len(name))
+#if printing with concatinated string, we need to maintain the data types
+#len() function returns the length of the string -> int
+#str() function converts the integer to a string
+#print() can only concatinate same data types
 print("Length of your name is: " + str(len(name)))
-#len() function returns the length of the stringnamename
+
+
 
 
 

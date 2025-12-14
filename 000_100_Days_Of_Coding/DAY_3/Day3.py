@@ -27,6 +27,29 @@ else:
 # >=  : greater than or equal to
 # <=  : less than or equal to
 
+#logical operators in python
+# and : returns True if both statements are true
+# or  : returns True if at least one statement is true -> TRUE always wins
+# not : reverses the result, returns False if the result is true    
+#Example of logical operators
+a = 5
+b = 7
+ 
+if a >= b and a != b:
+    print("A")
+#This reads out as: a is not greater than or equal to b and a is not equal to b
+elif not a >= b and a != b:
+    print("B")
+else:
+    print("C")
+#Truthiness in Python refers to the evaluation of values in a boolean context.
+#Values like None, False, 0, and empty collections are considered False, while others are True.
+a=5
+print(bool(a))
+print(not a)
+#print(not a) evaluates as false because any non-zero number is considered True, and 'not' reverses it to False.
+
+
 #Nested if-else statements
 if height >= 120:
     print("You are eligible to ride the rollercoaster!")
@@ -36,6 +59,9 @@ if height >= 120:
     #elif is used to check multiple conditions -> else if
     elif age <= 18:
         print("Your ticket price is $7.")
+    #logical operator 'and' is used to combine two conditions
+    elif age >= 45 and age <= 55:
+        print("Your ticket is free!")   
     else:
         print("Your ticket price is $12.")
 else:
@@ -67,5 +93,4 @@ elif size == "L":
     if extra_cheese == "Y":
         bill += 1
 print(f"Your final bill is: ${bill}")
-
 
